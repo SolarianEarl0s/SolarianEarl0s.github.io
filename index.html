@@ -7,8 +7,16 @@
   <meta name="description" content="Independent transmedia creator. AI video production, worldbuilding, web development. Based in the West Midlands, UK.">
   <meta property="og:title" content="Tales of Solaria | Creator Hub">
   <meta property="og:description" content="Independent transmedia creator. AI video production, worldbuilding, web development.">
-  <meta property="og:url" content="https://solarianearl0s.github.io/">
+  <meta property="og:url" content="https://hub.talesofsolaria.co.uk/">
   <meta property="og:type" content="website">
+  <!-- FIX #4: og:image for social share previews -->
+  <meta property="og:image" content="https://hub.talesofsolaria.co.uk/android-chrome-512x512.png">
+  <!-- FIX #3: favicon links -->
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Raleway:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -66,7 +74,44 @@
     .nav-links { display: flex; gap: 2.5rem; list-style: none; }
     .nav-links a { font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); transition: color 0.2s; }
     .nav-links a:hover { color: var(--gold); }
-    @media (max-width: 640px) { .nav-links { display: none; } }
+
+    /* FIX #5: Mobile hamburger nav */
+    .nav-burger {
+      display: none;
+      background: none; border: none; cursor: pointer;
+      flex-direction: column; justify-content: center; align-items: center;
+      gap: 5px; width: 36px; height: 36px; padding: 4px;
+    }
+    .nav-burger span {
+      display: block; width: 22px; height: 2px;
+      background: var(--gold); border-radius: 2px;
+      transition: transform 0.25s ease, opacity 0.25s ease;
+    }
+    .nav-burger[aria-expanded="true"] span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .nav-burger[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+    .nav-burger[aria-expanded="true"] span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    .nav-mobile {
+      display: none;
+      position: fixed; top: 57px; left: 0; right: 0; z-index: 99;
+      background: rgba(10,8,18,0.97); backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--gold-border);
+      padding: 1.5rem 2.5rem;
+      flex-direction: column; gap: 1.25rem;
+    }
+    .nav-mobile.open { display: flex; }
+    .nav-mobile a {
+      font-family: var(--font-display); font-size: 0.78rem;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--muted); transition: color 0.2s;
+    }
+    .nav-mobile a:hover { color: var(--gold); }
+
+    @media (max-width: 640px) {
+      .nav-links { display: none; }
+      .nav-burger { display: flex; }
+      .nav { padding: 1rem 1.5rem; }
+    }
 
     /* ===== LAYOUT ===== */
     .container { max-width: 1060px; margin: 0 auto; padding: 0 2rem; position: relative; z-index: 1; }
@@ -112,10 +157,12 @@
       border: 1px solid var(--gold-border); padding: 0.3rem 0.7rem; border-radius: 2px;
     }
     .hero-cta { display: flex; gap: 1rem; flex-wrap: wrap; }
+    /* FIX #9: btn elements use inline-flex for consistent cross-browser rendering */
     .btn-gold {
       font-family: var(--font-display); font-size: 0.75rem; letter-spacing: 0.1em;
       text-transform: uppercase; background: var(--gold); color: #0a0812;
       padding: 0.85rem 2rem; border-radius: 2px; font-weight: 700;
+      display: inline-flex; align-items: center;
       transition: background 0.2s, transform 0.2s;
     }
     .btn-gold:hover { background: var(--gold-hover); transform: translateY(-1px); }
@@ -123,6 +170,7 @@
       font-family: var(--font-display); font-size: 0.75rem; letter-spacing: 0.1em;
       text-transform: uppercase; border: 1px solid var(--gold-border); color: var(--muted);
       padding: 0.85rem 2rem; border-radius: 2px;
+      display: inline-flex; align-items: center;
       transition: border-color 0.2s, color 0.2s;
     }
     .btn-outline:hover { border-color: var(--gold-dim); color: var(--gold); }
@@ -356,7 +404,8 @@
     .form-group select:focus,
     .form-group textarea:focus { border-color: var(--gold-dim); }
     .form-group select { appearance: none; cursor: pointer; }
-    .form-group select option { background: #13102b; }
+    /* FIX #8: use CSS variable instead of hardcoded colour */
+    .form-group select option { background: var(--surface-2); }
     .form-group textarea { resize: vertical; min-height: 140px; }
     .form-submit {
       font-family: var(--font-display); font-size: 0.75rem; letter-spacing: 0.12em;
@@ -394,8 +443,11 @@
     .footer-copy { font-size: 0.72rem; color: var(--faint); }
 
     /* ===== LIVE CHAT ===== */
-    #chat-fab {
+    /* FIX #2: badge moved OUTSIDE the FAB button in HTML; FAB is now a clean button */
+    #chat-fab-wrap {
       position: fixed; bottom: 2rem; right: 2rem; z-index: 999;
+    }
+    #chat-fab {
       width: 56px; height: 56px; border-radius: 50%;
       background: var(--gold); color: #0a0812;
       border: none; cursor: pointer; font-size: 1.4rem;
@@ -410,6 +462,7 @@
       font-family: var(--font-display); letter-spacing: 0.05em;
       width: 18px; height: 18px; border-radius: 50%;
       display: none; align-items: center; justify-content: center;
+      pointer-events: none; aria-hidden: true;
     }
 
     #chat-panel {
@@ -535,7 +588,19 @@
       <li><a href="#email-updates">Updates</a></li>
       <li><a href="#contact">Contact</a></li>
     </ul>
+    <!-- FIX #5: hamburger button for mobile -->
+    <button class="nav-burger" id="nav-burger" aria-label="Open navigation menu" aria-expanded="false" aria-controls="nav-mobile">
+      <span></span><span></span><span></span>
+    </button>
   </nav>
+  <!-- FIX #5: mobile nav drawer -->
+  <div class="nav-mobile" id="nav-mobile" role="navigation" aria-label="Mobile navigation">
+    <a href="#what-i-do" class="nav-mobile-link">What I Do</a>
+    <a href="#work" class="nav-mobile-link">Work</a>
+    <a href="#music" class="nav-mobile-link">Music</a>
+    <a href="#email-updates" class="nav-mobile-link">Updates</a>
+    <a href="#contact" class="nav-mobile-link">Contact</a>
+  </div>
 
   <!-- HERO -->
   <section class="hero" aria-labelledby="hero-title">
@@ -894,7 +959,8 @@
             </div>
             <div class="form-group">
               <label for="reason">What do you need?</label>
-              <select id="reason" name="reason" required>
+              <!-- FIX #6: aria-required added to select -->
+              <select id="reason" name="reason" required aria-required="true">
                 <option value="" disabled selected>Select one&hellip;</option>
                 <option value="Creative Collaboration">Creative collaboration</option>
                 <option value="AI Video Production">AI video / visual production</option>
@@ -934,11 +1000,11 @@
     </div>
   </footer>
 
-  <!-- LIVE CHAT -->
-  <button id="chat-fab" aria-label="Open live chat" title="Live Chat">
-    &#128172;
-    <span id="chat-badge" aria-live="polite"></span>
-  </button>
+  <!-- FIX #2: badge is now OUTSIDE the button, inside a wrapper div -->
+  <div id="chat-fab-wrap">
+    <button id="chat-fab" aria-label="Open live chat" aria-expanded="false" title="Live Chat">&#128172;</button>
+    <span id="chat-badge" aria-hidden="true"></span>
+  </div>
 
   <div id="chat-panel" role="dialog" aria-modal="true" aria-label="Live Chat">
     <div class="chat-header">
@@ -1017,25 +1083,45 @@
     let unreadCount = 0;
     let panelOpen = false;
 
-    fab.addEventListener('click', () => {
-      panelOpen = !panelOpen;
-      panel.classList.toggle('open', panelOpen);
-      fab.setAttribute('aria-expanded', panelOpen);
-      if (panelOpen) {
-        unreadCount = 0;
-        badge.style.display = 'none';
-        badge.textContent = '';
-        messagesEl.scrollTop = messagesEl.scrollHeight;
-        if (chatUser) chatInput.focus();
-        else nameInput.focus();
+    // FIX #7: focus trap helpers
+    function getFocusable(el) {
+      return [...el.querySelectorAll('button:not([disabled]),input:not([disabled]),textarea:not([disabled]),select:not([disabled]),[tabindex]:not([tabindex="-1"])')]
+        .filter(e => !e.closest('[style*="display:none"]') && !e.closest('[style*="display: none"]'));
+    }
+    function trapFocus(e) {
+      const focusable = getFocusable(panel);
+      if (!focusable.length) return;
+      const first = focusable[0], last = focusable[focusable.length - 1];
+      if (e.key === 'Tab') {
+        if (e.shiftKey) { if (document.activeElement === first) { e.preventDefault(); last.focus(); } }
+        else { if (document.activeElement === last) { e.preventDefault(); first.focus(); } }
       }
-    });
+      if (e.key === 'Escape') { closeChatPanel(); }
+    }
 
-    closeBtn.addEventListener('click', () => {
+    function openChatPanel() {
+      panelOpen = true;
+      panel.classList.add('open');
+      fab.setAttribute('aria-expanded', 'true');
+      unreadCount = 0;
+      badge.style.display = 'none';
+      badge.textContent = '';
+      messagesEl.scrollTop = messagesEl.scrollHeight;
+      if (chatUser) chatInput.focus();
+      else nameInput.focus();
+      document.addEventListener('keydown', trapFocus);
+    }
+
+    function closeChatPanel() {
       panelOpen = false;
       panel.classList.remove('open');
       fab.setAttribute('aria-expanded', 'false');
-    });
+      document.removeEventListener('keydown', trapFocus);
+      fab.focus();
+    }
+
+    fab.addEventListener('click', () => { panelOpen ? closeChatPanel() : openChatPanel(); });
+    closeBtn.addEventListener('click', closeChatPanel);
 
     // Join chat with display name
     function joinChat(name) {
@@ -1090,17 +1176,10 @@
       sendBtn.disabled = true;
       setTimeout(() => sendBtn.disabled = false, 1200);
 
-      // Moderation check
       if (containsBanned(text)) {
-        // Log flagged message to Firebase for admin review, then discard from public feed
         if (chatReady) {
           const flaggedRef = ref(db, 'chat/flagged');
-          await push(flaggedRef, {
-            user: chatUser,
-            message: text,
-            ts: Date.now(),
-            reason: 'banned_phrase'
-          });
+          await push(flaggedRef, { user: chatUser, message: text, ts: Date.now(), reason: 'banned_phrase' });
         }
         const div = document.createElement('div');
         div.className = 'chat-msg flagged';
@@ -1111,13 +1190,8 @@
       }
 
       if (chatReady) {
-        await push(msgsRef, {
-          user: chatUser,
-          message: text,
-          ts: serverTimestamp()
-        });
+        await push(msgsRef, { user: chatUser, message: text, ts: serverTimestamp() });
       } else {
-        // Fallback: local display only
         addMsg(chatUser, text, Date.now());
       }
     }
@@ -1127,9 +1201,7 @@
       const recentQ = query(msgsRef, limitToLast(50));
       onChildAdded(recentQ, (snap) => {
         const d = snap.val();
-        if (d && d.user && d.message) {
-          addMsg(d.user, d.message, d.ts);
-        }
+        if (d && d.user && d.message) addMsg(d.user, d.message, d.ts);
       });
     }
 
@@ -1138,21 +1210,43 @@
   </script>
 
   <script>
-    // Starfield
+    // FIX #5: Mobile hamburger
+    (function(){
+      const burger = document.getElementById('nav-burger');
+      const mobileNav = document.getElementById('nav-mobile');
+      const mobileLinks = mobileNav.querySelectorAll('a');
+      burger.addEventListener('click', () => {
+        const open = mobileNav.classList.toggle('open');
+        burger.setAttribute('aria-expanded', open);
+        burger.setAttribute('aria-label', open ? 'Close navigation menu' : 'Open navigation menu');
+      });
+      mobileLinks.forEach(link => link.addEventListener('click', () => {
+        mobileNav.classList.remove('open');
+        burger.setAttribute('aria-expanded', 'false');
+        burger.setAttribute('aria-label', 'Open navigation menu');
+      }));
+    })();
+
+    // FIX #10: Starfield — pause animation when tab is hidden
     (function(){
       const c = document.getElementById('bg-canvas');
       const ctx = c.getContext('2d');
-      let stars = [];
+      let stars = [], rafId = null, running = true;
       function resize(){ c.width = window.innerWidth; c.height = window.innerHeight; }
       function init(){
         stars = [];
         for(let i=0;i<140;i++) stars.push({x:Math.random()*c.width, y:Math.random()*c.height, r:Math.random()*1.1+0.2, a:Math.random(), s:Math.random()*0.003+0.001});
       }
       function draw(){
+        if (!running) return;
         ctx.clearRect(0,0,c.width,c.height);
         stars.forEach(s=>{ s.a+=s.s; if(s.a>1)s.a=0; ctx.beginPath(); ctx.arc(s.x,s.y,s.r,0,Math.PI*2); ctx.fillStyle=`rgba(201,168,76,${s.a*0.45})`; ctx.fill(); });
-        requestAnimationFrame(draw);
+        rafId = requestAnimationFrame(draw);
       }
+      document.addEventListener('visibilitychange', () => {
+        if (document.hidden) { running = false; if (rafId) cancelAnimationFrame(rafId); }
+        else { running = true; draw(); }
+      });
       resize(); init(); draw();
       window.addEventListener('resize',()=>{resize();init();});
     })();
@@ -1174,22 +1268,11 @@
         btn.disabled = true;
         btn.textContent = 'Sending...';
         try {
-          const res = await fetch(form.action, {
-            method: 'POST',
-            body: new FormData(form),
-            headers: { 'Accept': 'application/json' }
-          });
-          if(res.ok){
-            success.style.display = 'block';
-            error.style.display = 'none';
-            form.style.display = 'none';
-          } else {
-            throw new Error('Server error');
-          }
+          const res = await fetch(form.action, { method:'POST', body:new FormData(form), headers:{'Accept':'application/json'} });
+          if(res.ok){ success.style.display='block'; error.style.display='none'; form.style.display='none'; }
+          else { throw new Error('Server error'); }
         } catch(err){
-          error.style.display = 'block';
-          btn.disabled = false;
-          btn.textContent = 'Send Message';
+          error.style.display='block'; btn.disabled=false; btn.textContent='Send Message';
         }
       });
     })();
@@ -1205,22 +1288,11 @@
         btn.disabled = true;
         btn.textContent = 'Joining...';
         try {
-          const res = await fetch(form.action, {
-            method: 'POST',
-            body: new FormData(form),
-            headers: { 'Accept': 'application/json' }
-          });
-          if(res.ok){
-            success.style.display = 'block';
-            error.style.display = 'none';
-            form.style.display = 'none';
-          } else {
-            throw new Error('Server error');
-          }
+          const res = await fetch(form.action, { method:'POST', body:new FormData(form), headers:{'Accept':'application/json'} });
+          if(res.ok){ success.style.display='block'; error.style.display='none'; form.style.display='none'; }
+          else { throw new Error('Server error'); }
         } catch(err){
-          error.style.display = 'block';
-          btn.disabled = false;
-          btn.textContent = 'Join the World';
+          error.style.display='block'; btn.disabled=false; btn.textContent='Join the World';
         }
       });
     })();
