@@ -584,7 +584,6 @@
     <ul class="nav-links" role="list">
       <li><a href="#what-i-do">What I Do</a></li>
       <li><a href="#work">Work</a></li>
-      <li><a href="https://solarianearl0s.github.io/act2v/" target="_blank" rel="noopener">Act II&middot;V</a></li>
       <li><a href="#music">Music</a></li>
       <li><a href="#email-updates">Updates</a></li>
       <li><a href="#contact">Contact</a></li>
@@ -598,7 +597,6 @@
   <div class="nav-mobile" id="nav-mobile" role="navigation" aria-label="Mobile navigation">
     <a href="#what-i-do" class="nav-mobile-link">What I Do</a>
     <a href="#work" class="nav-mobile-link">Work</a>
-    <a href="https://solarianearl0s.github.io/act2v/" target="_blank" rel="noopener" class="nav-mobile-link">Act II&middot;V &middot; The Captain</a>
     <a href="#music" class="nav-mobile-link">Music</a>
     <a href="#email-updates" class="nav-mobile-link">Updates</a>
     <a href="#contact" class="nav-mobile-link">Contact</a>
@@ -758,7 +756,6 @@
               <a href="https://solarianearl0s.github.io/talesofsolaria/" class="flagship-link" target="_blank" rel="noopener">Visit the World &#8599;</a>
               <a href="https://www.youtube.com/@Game4Digital" class="flagship-link" target="_blank" rel="noopener">YouTube &#8599;</a>
               <a href="https://www.wattpad.com/1512055057-solaria-evin%27s-tale-draft-the-mysterious-lady" class="flagship-link" target="_blank" rel="noopener">Read on Wattpad &#8599;</a>
-              <a href="https://solarianearl0s.github.io/act2v/" class="flagship-link" target="_blank" rel="noopener">Act II&middot;V Casting &#8599;</a>
             </div>
           </div>
         </div>
@@ -991,7 +988,6 @@
         <span class="footer-logo">TALES OF SOLARIA</span>
         <nav class="footer-links" aria-label="Footer navigation">
           <a href="https://solarianearl0s.github.io/talesofsolaria/" target="_blank" rel="noopener" aria-label="Tales of Solaria world site">The World</a>
-          <a href="https://solarianearl0s.github.io/act2v/" target="_blank" rel="noopener" aria-label="Act II V casting page">Act II&middot;V</a>
           <a href="https://www.youtube.com/@Game4Digital" target="_blank" rel="noopener" aria-label="YouTube">YouTube</a>
           <a href="https://www.tiktok.com/@solarianearl0s" target="_blank" rel="noopener" aria-label="TikTok SolarianEarl0s">TikTok</a>
           <a href="https://www.tiktok.com/@KentoClark" target="_blank" rel="noopener" aria-label="TikTok KentoClark">TikTok (KentoClark)</a>
@@ -1046,7 +1042,6 @@
       appId: "1:000000000000:web:0000000000000000"
     };
 
-    // ===== BANNED WORDS / PHRASES (light moderation) =====
     const BANNED = [
       'ai slop','slop','garbage content','trash content','fake content',
       'idiot','moron','stupid','dumb','retard','retarded',
@@ -1071,7 +1066,6 @@
       chatReady = false;
     }
 
-    // ===== CHAT UI =====
     const fab = document.getElementById('chat-fab');
     const panel = document.getElementById('chat-panel');
     const closeBtn = document.getElementById('chat-close-btn');
@@ -1087,7 +1081,6 @@
     let unreadCount = 0;
     let panelOpen = false;
 
-    // FIX #7: focus trap helpers
     function getFocusable(el) {
       return [...el.querySelectorAll('button:not([disabled]),input:not([disabled]),textarea:not([disabled]),select:not([disabled]),[tabindex]:not([tabindex="-1"])')]
         .filter(e => !e.closest('[style*="display:none"]') && !e.closest('[style*="display: none"]'));
@@ -1127,7 +1120,6 @@
     fab.addEventListener('click', () => { panelOpen ? closeChatPanel() : openChatPanel(); });
     closeBtn.addEventListener('click', closeChatPanel);
 
-    // Join chat with display name
     function joinChat(name) {
       if (!name.trim()) return;
       chatUser = name.trim().slice(0, 24);
@@ -1172,7 +1164,6 @@
       return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
     }
 
-    // ===== SEND MESSAGE =====
     async function sendMessage() {
       const text = chatInput.value.trim();
       if (!text || !chatUser) return;
@@ -1231,7 +1222,7 @@
       }));
     })();
 
-    // FIX #10: Starfield pause animation when tab is hidden
+    // Starfield
     (function(){
       const c = document.getElementById('bg-canvas');
       const ctx = c.getContext('2d');
@@ -1261,7 +1252,7 @@
       document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
     })();
 
-    // Contact form AJAX submit via Formspree
+    // Contact form
     (function(){
       const form = document.getElementById('contact-form');
       const btn = document.getElementById('submit-btn');
@@ -1281,7 +1272,7 @@
       });
     })();
 
-    // Email updates form AJAX submit via Formspree
+    // Email updates form
     (function(){
       const form = document.getElementById('email-form');
       const btn = document.getElementById('email-submit-btn');
